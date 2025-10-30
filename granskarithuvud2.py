@@ -9,7 +9,7 @@ st.title("Hämta ut info från rithuvud")
 
 st.markdown("""
 Ladda upp ritningar och exportera info i rithuvud. Jämför ritningsnummer med filnamn. Fungerar bara om filer är plottade rätt så rithuvud inte är förskjutet, baserat på ett specifikt projekt iykyk.  
-v.1.15
+v.2.0
 """)
 
 MM_TO_PT = 2.83465
@@ -151,4 +151,5 @@ if st.button("Starta") and uploaded_files:
         data=output,
         file_name="metadata_comparison.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
     )
