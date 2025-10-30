@@ -13,7 +13,7 @@ st.title("Interaktiv extraktion från rithuvud")
 st.markdown("""
 Ladda upp ritningar och välj rutor direkt på första sidan.  
 Exportera metadata till Excel med jämförelse av filnamn och ritningsnummer.  
-V 1.2
+V 1.3
 """)
 
 uploaded_files = st.file_uploader("Ladda upp PDF", type="pdf", accept_multiple_files=True)
@@ -33,6 +33,13 @@ if uploaded_files:
     # Convert PIL image to RGB and then to NumPy array
     page_image_rgb = page_image.convert("RGB")
     page_image_array = np.array(page_image_rgb)
+
+    # Debug info
+    st.write("Bildinformation:")
+    st.write("Mode:", page_image.mode)
+    st.write("Storlek:", page_image.size)
+    st.write("Array shape:", page_image_array.shape)
+    st.write("Array dtype:", page_image_array.dtype)
 
     canvas_result = st_canvas(
         fill_color="rgba(255, 165, 0, 0.3)",
