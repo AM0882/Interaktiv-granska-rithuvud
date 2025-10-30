@@ -2,10 +2,10 @@ import streamlit as st
 from streamlit_drawable_canvas import st_canvas
 import fitz  # PyMuPDF
 import pandas as pd
+from PIL import Image
 import io
 
 st.set_page_config(page_title="PDF Text Extractor", layout="wide")
-
 st.title("📐 PDF Drawing Text Extractor")
 
 uploaded_files = st.file_uploader("Upload PDF drawings", type=["pdf"], accept_multiple_files=True)
@@ -16,15 +16,16 @@ if uploaded_files:
     page = doc.load_page(0)
     pix = page.get_pixmap()
     img_bytes = pix.tobytes("png")
+    image = Image.open(io.BytesIO(img_bytes))
 
     st.subheader("Step 1: Select regions to extract text from")
     canvas_result = st_canvas(
         fill_color="rgba(255, 165, 0, 0.3)",
         stroke_width=2,
-        background_image=img_bytes,
+        background_image=image,
         update_streamlit=True,
-        height=pix.height,
-        width=pix.width,
+        height=image.height,
+        width=image.width,
         drawing_mode="rect",
         key="canvas",
     )
