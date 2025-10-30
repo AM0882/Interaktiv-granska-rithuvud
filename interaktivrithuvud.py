@@ -6,7 +6,7 @@ from io import BytesIO
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill
 from PIL import Image
-from streamlit_drawable_canvas import st_can
+from streamlit_drawable_canvas import st_canvas
 
 st.title("Interaktiv extraktion från rithuvud")
 
@@ -117,3 +117,4 @@ if uploaded_files:
             file_name="metadata_comparison.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
+
