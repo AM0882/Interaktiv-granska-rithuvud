@@ -6,15 +6,14 @@ from io import BytesIO
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill
 from PIL import Image
-from streamlit_drawable_canvas import st_canvas
-import base64
+from streamlit_drawable_canvas import st_can
 
 st.title("Interaktiv extraktion från rithuvud")
 
 st.markdown("""
 Ladda upp ritningar och välj rutor direkt på första sidan.  
 Exportera metadata till Excel med jämförelse av filnamn och ritningsnummer.  
-V 1.5
+V 1.6
 """)
 
 uploaded_files = st.file_uploader("Ladda upp PDF", type="pdf", accept_multiple_files=True)
@@ -31,19 +30,17 @@ if uploaded_files:
 
     st.image(page_image, caption="Första sidan – rita rutor för extraktion")
 
-    # Convert PIL image to base64 URL
-    buffered = BytesIO()
-    page_image.save(buffered, format="PNG")
-    img_bytes = buffered.getvalue()
-    img_base64 = base64.b64encode(img_bytes).decode()
-    img_url = f"data:image/png;base64,{img_base64}"
+    # Convert PIL image to RGB and then to NumPy array
+    page_image_rgb = page_image.convert("RGB")
+    page_image_array = np.array(page_image_rgb)
 
-    # Workaround: omit height and width to avoid resizing error
     canvas_result = st_canvas(
         fill_color="rgba(255, 165, 0, 0.3)",
         stroke_width=2,
-        background_image=img_url,
+        background_image=page_image_array,
         update_streamlit=True,
+        height=page_image.height,
+        width=page_image.width,
         drawing_mode="rect",
         key="canvas"
     )
