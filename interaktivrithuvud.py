@@ -1,17 +1,16 @@
-
 import streamlit as st
 import pdfplumber
 import pandas as pd
+import numpy as np
 from io import BytesIO
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill
 from PIL import Image
 from streamlit_drawable_canvas import st_canvas
-
 st.title("Interaktiv extraktion från rithuvud")
 
 st.markdown("""
-Ladda upp ritningar och välj rutor direkt på första sidan. 
+Ladda upp ritningar och välj rutor direkt på första sidan.  
 Exportera metadata till Excel med jämförelse av filnamn och ritningsnummer.
 """)
 
@@ -29,10 +28,13 @@ if uploaded_files:
 
     st.image(page_image, caption="Första sidan – rita rutor för extraktion")
 
+    # Convert PIL image to NumPy array for st_canvas
+    page_image_array = np.array(page_image)
+
     canvas_result = st_canvas(
         fill_color="rgba(255, 165, 0, 0.3)",
         stroke_width=2,
-        background_image=page_image,
+        background_image=page_image_array,
         update_streamlit=True,
         height=page_image.height,
         width=page_image.width,
