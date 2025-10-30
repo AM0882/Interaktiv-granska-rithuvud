@@ -7,12 +7,13 @@ from openpyxl import Workbook
 from openpyxl.styles import PatternFill
 from PIL import Image
 from streamlit_drawable_canvas import st_canvas
+
 st.title("Interaktiv extraktion från rithuvud")
 
 st.markdown("""
 Ladda upp ritningar och välj rutor direkt på första sidan.  
 Exportera metadata till Excel med jämförelse av filnamn och ritningsnummer.  
-V. 1.1
+V 1.2
 """)
 
 uploaded_files = st.file_uploader("Ladda upp PDF", type="pdf", accept_multiple_files=True)
@@ -29,8 +30,9 @@ if uploaded_files:
 
     st.image(page_image, caption="Första sidan – rita rutor för extraktion")
 
-    # Convert PIL image to NumPy array for st_canvas
-    page_image_array = np.array(page_image)
+    # Convert PIL image to RGB and then to NumPy array
+    page_image_rgb = page_image.convert("RGB")
+    page_image_array = np.array(page_image_rgb)
 
     canvas_result = st_canvas(
         fill_color="rgba(255, 165, 0, 0.3)",
@@ -115,4 +117,3 @@ if uploaded_files:
             file_name="metadata_comparison.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
-
