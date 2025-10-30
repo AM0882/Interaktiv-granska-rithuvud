@@ -11,7 +11,8 @@ st.title("Interaktiv extraktion från rithuvud")
 
 st.markdown("""
 Ladda upp ritningar och välj rutor direkt på första sidan.  
-Exportera metadata till Excel med jämförelse av filnamn och ritningsnummer.
+Exportera metadata till Excel med jämförelse av filnamn och ritningsnummer.  
+V. 1.1
 """)
 
 uploaded_files = st.file_uploader("Ladda upp PDF", type="pdf", accept_multiple_files=True)
@@ -114,3 +115,4 @@ if uploaded_files:
             file_name="metadata_comparison.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
+
