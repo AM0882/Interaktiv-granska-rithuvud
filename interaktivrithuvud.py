@@ -27,24 +27,19 @@ if uploaded_files:
         page_image = first_page.to_image(resolution=150).original
         page_width = first_page.width
         page_height = first_page.height
-
     st.image(page_image, caption="Första sidan – rita rutor för extraktion")
 
-    # Convert PIL image to RGB and then to NumPy array
-    page_image_rgb = page_image.convert("RGB")
-    page_image_array = np.array(page_image_rgb)
-
-    # Debug info
-    st.write("Bildinformation:")
-    st.write("Mode:", page_image.mode)
-    st.write("Storlek:", page_image.size)
-    st.write("Array shape:", page_image_array.shape)
-    st.write("Array dtype:", page_image_array.dtype)
+    # Convert PIL image to base64 URL
+    buffered = BytesIO()
+    page_image.save(buffered, format="PNG")
+    img_bytes = buffered.getvalue()
+    img_base64 = base64.b64encode(img_bytes).decode()
+    img_url = f"data:image/png;base64,{img_base64}"
 
     canvas_result = st_canvas(
         fill_color="rgba(255, 165, 0, 0.3)",
         stroke_width=2,
-        background_image=page_image_array,
+        background_image=img_url,
         update_streamlit=True,
         height=page_image.height,
         width=page_image.width,
