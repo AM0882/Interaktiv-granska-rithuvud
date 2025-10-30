@@ -16,7 +16,7 @@ if uploaded_files:
     page = doc.load_page(0)
     pix = page.get_pixmap()
     img_bytes = pix.tobytes("png")
-    image = Image.open(io.BytesIO(img_bytes))
+    image = Image.open(io.BytesIO(img_bytes)).convert("RGB")  # Ensure it's a proper RGB image
 
     st.subheader("Step 1: Select regions to extract text from")
     canvas_result = st_canvas(
