@@ -14,7 +14,7 @@ st.title("Interaktiv extraktion från rithuvud")
 st.markdown("""
 Ladda upp ritningar och välj rutor direkt på första sidan.  
 Exportera metadata till Excel med jämförelse av filnamn och ritningsnummer.  
-V 1.4
+V 1.5
 """)
 
 uploaded_files = st.file_uploader("Ladda upp PDF", type="pdf", accept_multiple_files=True)
@@ -28,6 +28,7 @@ if uploaded_files:
         page_image = first_page.to_image(resolution=150).original
         page_width = first_page.width
         page_height = first_page.height
+
     st.image(page_image, caption="Första sidan – rita rutor för extraktion")
 
     # Convert PIL image to base64 URL
@@ -37,13 +38,12 @@ if uploaded_files:
     img_base64 = base64.b64encode(img_bytes).decode()
     img_url = f"data:image/png;base64,{img_base64}"
 
+    # Workaround: omit height and width to avoid resizing error
     canvas_result = st_canvas(
         fill_color="rgba(255, 165, 0, 0.3)",
         stroke_width=2,
         background_image=img_url,
         update_streamlit=True,
-        height=page_image.height,
-        width=page_image.width,
         drawing_mode="rect",
         key="canvas"
     )
@@ -120,4 +120,3 @@ if uploaded_files:
             file_name="metadata_comparison.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
-
