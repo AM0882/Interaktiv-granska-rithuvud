@@ -5,11 +5,11 @@ from io import BytesIO
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill
 import time
-st.title("Hämta ut info från rithuvud")
+st.title("Hämta ut info från rithuvud och granska")
 
 st.markdown("""
 Ladda upp ritningar och exportera info i rithuvud. Jämför ritningsnummer med filnamn, och granskar egna värden. Fungerar bara om filer är plottade rätt så rithuvud inte är förskjutet, baserat på ett specifikt projekt iykyk.  
-v.2.0
+v.2.1
 """)
 
 MM_TO_PT = 2.83465
@@ -153,4 +153,5 @@ if st.button("Starta") and uploaded_files:
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
     )
+
 
