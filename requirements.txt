@@ -1,5 +1,7 @@
 
 streamlit
-PyMuPDF
 pandas
+pdfplumber
+pillow
 openpyxl
+streamlit-drawable-canvas
